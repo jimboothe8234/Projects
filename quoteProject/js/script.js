@@ -78,42 +78,29 @@ var colors = [
 // variables 
 var usedQuotes = [];
 var defaultTally = 0;
-var usedFunny = [];
-var usedLit = [];
-var usedMovie = [];
-var timeoutID = '';
 var QuotesTotal = quotes.length;
+var usedFunny = [];
 var funnyTotal = 2;
-var litTotal = 3;
-var movieTotal = 3;
-var QuotesTally = 0;
-var litTally = 0;
-var movieTally = 0;
 var funnyTally = 0;
+var usedLit = [];
+var litTotal = 3;
+var litTally = 0;
+var movieTotal = 3;
+var usedMovie = [];
+var movieTally = 0;
+var timeoutID = '';
 var sel = document.getElementById("select");
 
 // functions
 
-
-function getSelected(sel) {
-	var option;
-	for (i = 0; i < sel.options.length; i += 1) {
-		opt = sel.options[i];
-		if ( opt.selected === true) {
-			break;	
-		}
-	}
-	return opt;
-}
-
 function getNumber(input) {
 	Number = Math.floor(Math.random() * input.length)
 	return Number;
-} // end getNumber funciton to generate random number with input for type length
+} // end getNumber funciton to generate random number with input for type length. This is for Quotes and Colors
 
 
 
-function test(inside, insideTotal, insideTally, insideQuote) {
+function tagQuotes(inside, insideTotal, insideTally, insideQuote) {
 
 	while(insideTally < insideTotal) {
 		var Numbers = getNumber(quotes);
@@ -130,23 +117,18 @@ function test(inside, insideTotal, insideTally, insideQuote) {
 		} //Main if/else end 
 	} // while end 
 	
-} // function end
+} // function end tagQuotes. THis function used to get only specific quotes in tag categories. 
 
 function printConsole(tally, total, quote) {
 	console.log("This is quote number " + tally + " out of a total of " + total + " ... Quote is: " + quote);
-
-}
+} // function for printing info to console about quotes. Prints number or quotes out of total of quotes and then the actual quote. 
 
 function getRandomQuote() {
 	var option = sel.value;
 	var holdquote = '';
-/*
-	do {
-		var Numbers = getNumber();
-	} while (quoteSelect.includes(Numbers)); 
-	*/
+		// switch used from select html element for choosing to view only certain tag quotes. 
 		switch (option) {
-			case "funny":
+			case "funny": // only shows Funny taged quotes
 					if (funnyTally === funnyTotal) {
 						usedFunny = [];
 						funnyTally = 0;
@@ -161,7 +143,7 @@ function getRandomQuote() {
 					}
 					
 				break;
-			case "lit":
+			case "lit": // only shows literary quotes
 					if (litTally === litTotal) {
 						usedLit = [];
 						litTally = 0;
@@ -176,7 +158,7 @@ function getRandomQuote() {
 					}
 
 				break;
-			case "movie":
+			case "movie": // only shows movie quotes 
 					if (movieTally === movieTotal) {
 						usedMovie = [];
 						movieTally = 0;
@@ -190,28 +172,23 @@ function getRandomQuote() {
 						printConsole(movieTally, movieTotal, holdquote.quote);
 					}
 				break;
-			case "random":
+			case "random": // shows all the quotes randomly 
 				do {
 					var Numbers = getNumber(quotes);
 				} while (usedQuotes.includes(Numbers)); 
-				usedQuotes.push(Numbers);
-				defaultTally++;
-				/*if (normalQuotes.length === QuotesTotal) {
-			   		refreshQuotes();	
-			   		quoteTally = 0;
+					usedQuotes.push(Numbers);
+					defaultTally++;
+					if(usedQuotes.length === QuotesTotal) {
+						usedQuotes = [];
+						defaultTally = 0;
+						console.log("refreshed Quotes");
+					}	
+					printConsole(defaultTally, QuotesTotal, quotes[Numbers].quote);
+					holdquote = quotes[Numbers];
+					break;
 				}
-				*/
-				if(usedQuotes.length === QuotesTotal) {
-					usedQuotes = [];
-					defaultTally = 0;
-					console.log("refreshed Quotes");
-				}	
-				printConsole(defaultTally, QuotesTotal, quotes[Numbers].quote);
-				holdquote = quotes[Numbers];
-				break;
-		}
-		window.clearTimeout(timeoutID);
-		return holdquote;
+					window.clearTimeout(timeoutID); // clears the timeout each time function is called
+					return holdquote;  //this returns the random quote to be printed after all tag logic is completed. 
 } // end RandomQuote - uses randome number to generate quote/ updates usedquotes and retuns the quote opbject 
 
 function getRandomColor() {
@@ -222,9 +199,10 @@ function getRandomColor() {
 
 
 function printQuote() {
-	var quote = getRandomQuote();
-	var color = getRandomColor();
-	if(color.tag === "light") {
+	var quote = getRandomQuote(); // gets random quote (with tag options)
+	var color = getRandomColor(); // gets random color 
+	// below code changes background color to random color on quote change. Updates text and button color depending on color randomly selected from above function call. 
+	if(color.tag === "light") {         
 		document.getElementById('body').style.color = "#000";
 		document.getElementById('body').style.textShadow= "none";
 		document.getElementById("loadQuote").style.backgroundColor = "#000";
@@ -249,6 +227,8 @@ function printQuote() {
 		document.getElementById("select").style.color = "#000";
 		console.log("Dark color tag randomly Chosen");
 	}
+
+	// formats quote object data
 	var quoteHTML = "";
 	quoteHTML = "<p class='quote'>" + quote.quote + "</p><p class='source'>" + quote.source;
 			if (quote.citation != null) {
@@ -259,13 +239,13 @@ function printQuote() {
 				quoteHTML += "</p>";	
 			} // end else 
  
-	document.getElementById('quote-box').innerHTML = quoteHTML;
-	document.getElementById('body').style.background = color.color;
+	document.getElementById('quote-box').innerHTML = quoteHTML; //pruints html to quote-box
+	document.getElementById('body').style.background = color.color; //updates background color. 
 	
-	timeoutID = window.setTimeout(printQuote, 30000);
+	timeoutID = window.setTimeout(printQuote, 30000); //adds timeout and will update next random quote after timeout. 
 } // end Function printQuote - used to generate the HTML to print to screen inputing quote opbject info. 
 
-printQuote();
+printQuote(); // starts initial random quote. 
 
 // event listener to respond to "Show another quote" button clicks
 // when user clicks anywhere on the button, the "printQuote" function is called
