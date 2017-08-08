@@ -133,11 +133,11 @@ function getRandomQuote() {
 						usedFunny = [];
 						funnyTally = 0;
 						console.log("refreshed quotes");
-						holdquote = test("funny", funnyTotal, funnyTally, usedFunny);
+						holdquote = tagQuotes("funny", funnyTotal, funnyTally, usedFunny);
 						funnyTally ++;
 						printConsole(funnyTally, funnyTotal, holdquote.quote);
 					} else {
-						holdquote = test("funny", funnyTotal, funnyTally, usedFunny);
+						holdquote = tagQuotes("funny", funnyTotal, funnyTally, usedFunny);
 						funnyTally ++;
 						printConsole(funnyTally, funnyTotal, holdquote.quote);
 					}
@@ -148,11 +148,11 @@ function getRandomQuote() {
 						usedLit = [];
 						litTally = 0;
 						console.log("refreshed quotes");
-						holdquote = test("lit", litTotal, litTally, usedLit);
+						holdquote = tagQuotes("lit", litTotal, litTally, usedLit);
 						litTally ++;
 						printConsole(litTally, litTotal, holdquote.quote);
 					} else {
-						holdquote = test("lit", litTotal, litTally, usedLit);
+						holdquote = tagQuotes("lit", litTotal, litTally, usedLit);
 						litTally ++;
 						printConsole(litTally, litTotal, holdquote.quote);
 					}
@@ -163,11 +163,11 @@ function getRandomQuote() {
 						usedMovie = [];
 						movieTally = 0;
 						console.log("refreshed quotes");
-						holdquote = test("movie", movieTotal, movieTally, usedMovie);
+						holdquote = tagQuotes("movie", movieTotal, movieTally, usedMovie);
 						movieTally ++;
 						printConsole(movieTally, movieTotal, holdquote.quote);
 					} else {
-						holdquote = test("movie", movieTotal, movieTally, usedMovie);
+						holdquote = tagQuotes("movie", movieTotal, movieTally, usedMovie);
 						movieTally ++;
 						printConsole(movieTally, movieTotal, holdquote.quote);
 					}
